@@ -127,7 +127,7 @@ combined = pd.concat(all_results)
 combined.to_csv("batch_analysis.csv")
 ```
 
-## Output Metrics
+## Output metrics
 
 The analysis provides these metrics for each ROI:
 - **transitions_per_roi**: Number of times animal entered the ROI
@@ -137,13 +137,13 @@ The analysis provides these metrics for each ROI:
 - **avg_time_in_roi_sec**: Average seconds per visit
 - **avg_vel_in_roi**: Average velocity (pixels/frame) while in ROI
 
-## Tips
+## Tips!
 
 1. **Start with visualization** to understand your arena and animal movement patterns
 2. **Use high-confidence tracking points** (likelihood > 0.9) for more accurate results
 3. **Save ROI definitions** for consistent analysis across multiple files
 4. **Check data quality** using the inspect script before analysis
-5. **Consider your experimental design** when defining ROIs (e.g., center vs periphery for anxiety tests)
+5. **Consider your experimental design** when defining ROIs (for instance - center vs periphery for anxiety tests)
 
 ## Requirements
 
