@@ -1,7 +1,7 @@
 # DeepLabCut ROI Analysis 
 Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose estimation data. This repo helps you analyze time spent in different regions of interest (ROIs) from DeepLabCut tracking data.
 
-### Author: Wiktoria Zaniewska
+## Author: Wiktoria Zaniewska
 
 ## Files 
 1. **`inspect_dlc_h5.py`** - Utility to inspect your h5 files before analysis. Fill (filepath). Optionally allows you to save the .txt file for further analysis.
