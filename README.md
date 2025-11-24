@@ -10,6 +10,8 @@ Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose est
 4. **`example_roi_usage.py`** - Complete example showing how to use the toolkit
 5. **`single_ROI_statistics.py`** - Allows to draw or use preexisting ROI. Output explained in **`SINGLE_ROI_GUIDE.md`**
 
+ffmpeg checking!
+
 # Start
 
 ## 1. First, inspect your DeepLabCut h5 file to understand the data:
