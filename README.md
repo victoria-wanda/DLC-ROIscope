@@ -8,7 +8,7 @@ Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose est
 2. **`time_in_each_roi.py`** - ROI analysis function available on DeepLabCut official repo (modified and integrated into the main class). 
 3. **`deeplabcut_roi_analysis.py`** - Main analysis class with all functionality
 4. **`example_roi_usage.py`** - Complete example showing how to use the toolkit
-5. **`diamond_analysis.py`** - ROI analysis for diamond-shaped arena (45 degrees rotated square). Extra feature specific for Experiment Social.
+5. **`single_ROI_statistics.py`** - Allows to draw or use preexisting ROI. Output explained in **`SINGLE_ROI_GUIDE.md`**
 
 # Start
 
