@@ -7,56 +7,24 @@ Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose est
 1. **`inspect_dlc_h5.py`** - Utility to inspect your h5 files before analysis. Fill (filepath). Optionally allows you to save the .txt file for further analysis.
 2. **`time_in_each_roi.py`** - ROI analysis function available on DeepLabCut official repo (modified and integrated into the main class). 
 3. **`deeplabcut_roi_analysis.py`** - Main analysis class with all functionality
-4. **`example_roi_usage.py`** - Complete example showing how to use the toolkit
-5. **`single_ROI_statistics.py`** - Allows to draw or use preexisting ROI. Output explained in **`SINGLE_ROI_GUIDE.md`**
+4. **`single_ROI_statistics.py`** - Allows to draw or use preexisting ROI. Output explained in **`SINGLE_ROI_GUIDE.md`**
 
-ffmpeg checking!
-
-# Start
-
-## 1. First, inspect your DeepLabCut h5 file to understand the data:
+# 1. First, inspect your DeepLabCut h5 file to understand the data (inspect_dlc_h5.py)
 
 ```bash
-python inspect_dlc_h5.py "FILENAME".h5
+python inspect_dlc_h5.py "FILE_NAME".h5
 ```
-
 ## This will show you:
-- Available bodyparts
-- Number of frames
-- Arena boundaries - beware of the experimental cases where the Agent is static/not exploring the arena
-- Data quality metrics
+a) Available bodyparts
+b) Number of frames
+c) Arena boundaries - beware of the experimental cases where the Agent is static/not exploring the arena
+d) Data quality metrics
 
-## 2. Basic usage for ROI analysis:
+# 2. DeepLabCut ROI analysis (deeplabcut_roi_analysis.py)
 
-```python
-from deeplabcut_roi_analysis import DeepLabCutROIAnalyzer
+## Methods for defining ROIs
 
-# Load your data
-analyzer = DeepLabCutROIAnalyzer("FILENAME.h5")
-
-# Visualize trajectory and heatmap
-analyzer.plot_trajectory_with_heatmap(bodypart="nose")
-
-# Define ROIs interactively (opens a clickable window)
-analyzer.define_roi_interactive()
-
-# Or define a grid of ROIs
-analyzer.define_roi_grid(n_rows=3, n_cols=3)
-
-# Visualize your ROIs
-analyzer.visualize_rois()
-
-# Analyze time spent in each ROI
-results = analyzer.analyze_roi_occupancy(fps=30)  # Set your video FPS
-print(results)
-
-# Save results
-results.to_csv("roi_analysis_results.csv")
-```
-
-## Methods for Defining ROIs
-
-### Method 1: Interactive (Recommended for custom shapes)
+### Method 1: Interactive (mostly for custom shapes)
 ```python
 analyzer.define_roi_interactive()
 ```
@@ -64,19 +32,19 @@ analyzer.define_roi_interactive()
 - Press 'q' to quit
 - Press 'c' to clear all ROIs
 
-### Method 2: Automatic Grid
+### Method 2: Automatic grid
 ```python
 analyzer.define_roi_grid(n_rows=3, n_cols=3, roi_prefix="zone")
 ```
 
-### Method 3: Manual with Coordinates
+### Method 3: Manual with coordinates
 ```python
 analyzer.define_roi_manual("center", x1, y1, x2, y2)
 ```
 
-### Method 4: Common Behavioral Setups
+### Method 4: Common behavioral setups
 
-#### Open Field Test (Center vs Periphery):
+#### Example --> Open Field Test (Center vs Periphery):
 ```python
 # Get arena bounds
 arena_width = analyzer.arena_bounds['width']
@@ -84,7 +52,7 @@ arena_height = analyzer.arena_bounds['height']
 x_min = analyzer.arena_bounds['x_min']
 y_min = analyzer.arena_bounds['y_min']
 
-# Define center zone (1/3 of arena)
+# Define center zone (in this case 1/3 of arena)
 center_size = 0.33
 center_x1 = x_min + arena_width * (0.5 - center_size/2)
 center_y1 = y_min + arena_height * (0.5 - center_size/2)
@@ -93,42 +61,6 @@ center_y2 = y_min + arena_height * (0.5 + center_size/2)
 
 analyzer.define_roi_manual("center", center_x1, center_y1, center_x2, center_y2)
 ```
-
-## Saving and Reusing ROI Definitions
-
-Save your ROI definitions:
-```python
-analyzer.save_rois("my_rois.json")
-```
-
-Load them for other files:
-```python
-analyzer = DeepLabCutROIAnalyzer("another_file.h5")
-analyzer.load_rois("my_rois.json")
-```
-
-## Batch Processing Multiple Files
-
-```python
-import pandas as pd
-from deeplabcut_roi_analysis import DeepLabCutROIAnalyzer
-
-roi_file = "my_rois.json"
-h5_files = ["file1.h5", "file2.h5", "file3.h5"]
-
-all_results = []
-for h5_file in h5_files:
-    analyzer = DeepLabCutROIAnalyzer(h5_file)
-    analyzer.load_rois(roi_file)
-    results = analyzer.analyze_roi_occupancy(bodypart="nose", fps=30)
-    results['filename'] = h5_file
-    all_results.append(results)
-
-# Combine all results
-combined = pd.concat(all_results)
-combined.to_csv("batch_analysis.csv")
-```
-
 ## Output metrics
 
 The analysis provides these metrics for each ROI:
@@ -138,6 +70,22 @@ The analysis provides these metrics for each ROI:
 - **avg_time_in_roi**: Average frames per visit
 - **avg_time_in_roi_sec**: Average seconds per visit
 - **avg_vel_in_roi**: Average velocity (pixels/frame) while in ROI
+
+# 3. Single ROI Preference Analysis (single_ROI_statistics.py)
+
+Main features:
+Interactive ROI drawing  (automatically saved for reuse)
+Processes entire recording
+Multiple preference metrics (classic index, discrimination index, exploration ratio)
+Statistical validation (tests against chance based on ROI size)
+Output: visual data in 9 frames and 
+TO USE for the next files in 1. experiment change only 2 lines: * h5_file and FPS *
+
+Edit lines:
+h5_file = "your_file.h5"
+FPS = 25
+
+
 
 ## Tips!
 
@@ -160,17 +108,4 @@ Install with:
 pip install pandas numpy matplotlib scipy h5py
 ```
 
-## Troubleshooting
-
-**Problem**: "No ROIs defined"
-**Solution**: Make sure to define ROIs before running analysis
-
-**Problem**: Low confidence tracking points affecting results
-**Solution**: The analyzer automatically filters points with likelihood < 0.9
-
-**Problem**: ROIs don't match arena
-**Solution**: Use `visualize_rois()` to check ROI placement and adjust coordinates
-
-## Example Workflow
-
-See `example_roi_usage.py` for a complete, commented workflow.
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
