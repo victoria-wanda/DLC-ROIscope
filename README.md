@@ -1,5 +1,5 @@
-# DeepLabCut ROI Analysis 
-Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose estimation data. This repo helps you analyze time spent in different regions of interest (ROIs) from DeepLabCut tracking data.
+# DeepLabCut ROI analysis 
+Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose estimation data. This repo helps you analyze time spent in different regions of interest (ROIs) from DeepLabCut tracking data.🐀🐁
 
 ## Author: Wiktoria Zaniewska
 
