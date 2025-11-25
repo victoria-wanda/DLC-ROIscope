@@ -7,6 +7,8 @@ import warnings
 """
     Functions to extract time spent by the mouse in each of a list of user defined ROIS 
 
+    THIS FILE HAS BEEN TAKEN FROM:
+
     Contributed by Federico Claudi
     https://github.com/FedeClaudi
 
