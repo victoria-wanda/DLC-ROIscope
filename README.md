@@ -81,7 +81,7 @@ The analysis provides these metrics for each ROI:
 - Output: visual data in 9 frames and 
 - TO USE for the next files in one experiment edit lines:
 h5_file = "your_file.h5"
-FPS = 25
+FPS = ex. 25
 
 
 
