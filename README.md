@@ -95,13 +95,6 @@ FPS = ex. 25
 
 ## Requirements
 
-- pandas
-- numpy
-- matplotlib
-- scipy
-- h5py
-
-Install with:
 ```bash
 pip install pandas numpy matplotlib scipy h5py
 ```
