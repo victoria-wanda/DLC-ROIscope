@@ -15,10 +15,10 @@ Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose est
 python inspect_dlc_h5.py "FILE_NAME".h5
 ```
 ## This will show you:
-a) Available bodyparts
-b) Number of frames
-c) Arena boundaries - beware of the experimental cases where the Agent is static/not exploring the arena
-d) Data quality metrics
+- Available bodyparts
+- Number of frames
+- Arena boundaries - beware of the experimental cases where the Agent is static/not exploring the arena
+- Data quality metrics
 
 # 2. DeepLabCut ROI analysis (deeplabcut_roi_analysis.py)
 
@@ -29,8 +29,8 @@ d) Data quality metrics
 analyzer.define_roi_interactive()
 ```
 - Click to define corners of rectangular ROIs
-- Press 'q' to quit
-- Press 'c' to clear all ROIs
+- Press Q to quit
+- Press C to clear all ROIs
 
 ### Method 2: Automatic grid
 ```python
@@ -73,15 +73,13 @@ The analysis provides these metrics for each ROI:
 
 # 3. Single ROI Preference Analysis (single_ROI_statistics.py)
 
-Main features:
-Interactive ROI drawing  (automatically saved for reuse)
-Processes entire recording
-Multiple preference metrics (classic index, discrimination index, exploration ratio)
-Statistical validation (tests against chance based on ROI size)
-Output: visual data in 9 frames and 
-TO USE for the next files in 1. experiment change only 2 lines: * h5_file and FPS *
-
-Edit lines:
+## Main features:
+- Interactive ROI drawing  (automatically saved for reuse)
+- Processes entire recording
+- Multiple preference metrics (classic index, discrimination index, exploration ratio)
+- Statistical validation (tests against chance based on ROI size)
+- Output: visual data in 9 frames and 
+- TO USE for the next files in one experiment edit lines:
 h5_file = "your_file.h5"
 FPS = 25
 
