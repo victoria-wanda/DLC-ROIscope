@@ -88,14 +88,6 @@ Script that quantifies animal behavior for a region of interest (ROI) from DeepL
 ## New features: 
 Automatically processes multiple h5 files using the same ROI for all or existing one, generating individual 9-panel visualizations and CSV reports for each file, plus a summary table comparing all csv's.
 
-## Tips!
-
-1. **Start with visualization** to understand your arena and animal movement patterns
-2. **Use high-confidence tracking points** (likelihood > 0.9) for more accurate results
-3. **Save ROI definitions** for consistent analysis across multiple files
-4. **Check data quality** using the inspect script before analysis
-5. **Consider your experimental design** when defining ROIs (for instance - center vs periphery for anxiety tests)
-
 ## Requirements
 
 ```bash
