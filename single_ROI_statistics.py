@@ -158,7 +158,7 @@ def calculate_preference_metrics(analyzer, roi_name, fps=25):
     print("CALCULATING PREFERENCE METRICS")
     print("="*60)
     
-    # Get tracking data
+    # Get tracking data - CAN BE DIFFERENT BODYPART (this is case specific)
     bodypart = "Nose"
     x = analyzer.df[analyzer.scorer][bodypart]['x'].values
     y = analyzer.df[analyzer.scorer][bodypart]['y'].values
@@ -551,7 +551,7 @@ def create_visualizations(analyzer, metrics, in_roi, velocity, roi_name, fps=25)
 
 def analyze_single_roi():
     # CHANGE THESE TWO LINES FOR NEW FILES ANALYSIS!
-    h5_file = "INSERT_YOUR_H5_MODEL_NAME.h5"
+    h5_file = "MODEL_NAME.h5"
     FPS = 25  # Video frame rate (can be checked in ffmpeg using: ffmpeg -i "MODEL_VIDEO_NAME_HERE.mp4" 2>&1 | grep "fps")
 
     
@@ -571,30 +571,58 @@ def analyze_single_roi():
     roi_filename = f'{base_filename}_single_roi_definition.json'
     roi_name = None
     
-    if os.path.exists(roi_filename):
-        print(f"\nFound existing ROI definition: {roi_filename}")
-        use_existing = input("Use existing ROI? (y/n): ").strip().lower()
-        
-        if use_existing == 'y':
-            # Load existing ROI
-            analyzer.load_rois(roi_filename)
-            if analyzer.rois:
-                roi_name = list(analyzer.rois.keys())[0]  # Get first (and only) ROI
-                print(f"Loaded ROI: '{roi_name}'")
+    # Look for all ROI definition files in the directory
+    import glob
+    roi_files = glob.glob('*_single_roi_definition.json')
+    
+    if roi_files:
+        print(f"\nFound {len(roi_files)} ROI definition(s):")
+        for i, file in enumerate(roi_files, 1):
+            # Check if it's the current file's ROI
+            if file == roi_filename:
+                print(f"  {i}. {file} (current file)")
             else:
-                print("Error loading ROI. Drawing new one")
-                roi_name = None
-        else:
-            # Clear and draw new
+                print(f"  {i}. {file}")
+        
+        print(f"\nOptions:")
+        print(f"  1-{len(roi_files)}: Use selected ROI")
+        print(f"  n: Draw new ROI")
+        
+        choice = input("Your choice: ").strip().lower()
+        
+        if choice == 'n':
+            # Draw new ROI
+            print("\nDrawing new ROI...")
             analyzer.rois = {}
             roi_name = draw_single_roi(analyzer)
+        else:
+            try:
+                # Use selected ROI
+                roi_index = int(choice) - 1
+                if 0 <= roi_index < len(roi_files):
+                    selected_roi_file = roi_files[roi_index]
+                    print(f"\nLoading ROI from: {selected_roi_file}")
+                    analyzer.load_rois(selected_roi_file)
+                    if analyzer.rois:
+                        roi_name = list(analyzer.rois.keys())[0]
+                        print(f"Loaded ROI: '{roi_name}'")
+                    else:
+                        print("Error loading ROI. Drawing new one...")
+                        roi_name = draw_single_roi(analyzer)
+                else:
+                    print("Invalid selection. Drawing new ROI...")
+                    roi_name = draw_single_roi(analyzer)
+            except ValueError:
+                print("Invalid input. Drawing new ROI...")
+                roi_name = draw_single_roi(analyzer)
     else:
-        # No existing ROI, draw new one
-        print("\nNo existing ROI found. Drawing new one")
+        # No existing ROI files found
+        print("\nNo existing ROI definitions found in directory")
+        print("Drawing new ROI...")
         roi_name = draw_single_roi(analyzer)
     
     # Save ROI if newly drawn
-    if roi_name and (not os.path.exists(roi_filename) or use_existing != 'y'):
+    if roi_name and not os.path.exists(roi_filename):
         analyzer.save_rois(roi_filename)
         print(f"ROI saved to: {roi_filename}")
     
