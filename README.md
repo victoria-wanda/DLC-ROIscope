@@ -83,7 +83,10 @@ The analysis provides these metrics for each ROI:
 h5_file = "your_file.h5"
 FPS = ex. 25
 
-
+# 4. Single ROI all analysis (batch_single_roi.py)
+Script that quantifies animal behavior for a region of interest (ROI) from DeepLabCut tracking data. 
+## New features: 
+Automatically processes multiple h5 files using the same ROI for all or existing one, generating individual 9-panel visualizations and CSV reports for each file, plus a summary table comparing all csv's.
 
 ## Tips!
 
