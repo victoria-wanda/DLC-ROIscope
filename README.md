@@ -79,7 +79,7 @@ The analysis provides these metrics for each ROI:
 - Processes entire recording
 - Multiple preference metrics (classic index, discrimination index, exploration ratio)
 - Statistical validation (tests against chance based on ROI size)
-- Output: visual data in 9 frames and 
+- Output: visual data in 9 frames and csv
 - TO USE for the next files in one experiment edit lines:
 h5_file = "your_file.h5"
 FPS = ex. 25
