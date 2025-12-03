@@ -7,7 +7,8 @@ Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose est
 1. **`inspect_dlc_h5.py`** - Utility to inspect your h5 files before analysis. Fill (filepath). Optionally allows you to save the .txt file for further analysis.
 2. **`time_in_each_roi.py`** - ROI analysis function available on DeepLabCut official repo (modified and integrated into the main class). 
 3. **`deeplabcut_roi_analysis.py`** - Main analysis class with all functionality
-4. **`single_ROI_statistics.py`** - Allows to draw or use preexisting ROI. Output explained in **`SINGLE_ROI_GUIDE.md`**
+4. **`single_ROI_statistics.py`** - Allows to draw or use preexisting ROI in JSON. Output explained in **`SINGLE_ROI_GUIDE.md`**
+5. **`batch_single_roi.py`** - Processes all h5 within one folder - drawing ROI on the first arena or using the preexisting ROI in JSON. 
 
 # 1. First, inspect your DeepLabCut h5 file to understand the data (inspect_dlc_h5.py)
 
