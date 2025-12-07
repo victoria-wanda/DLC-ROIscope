@@ -8,7 +8,8 @@ Interactive tool for exploring regions of interest (ROIs) in DeepLabCut pose est
 2. **`time_in_each_roi.py`** - ROI analysis function available on DeepLabCut official repo (modified and integrated into the main class). 
 3. **`deeplabcut_roi_analysis.py`** - Main analysis class with all functionality
 4. **`single_ROI_statistics.py`** - Allows to draw or use preexisting ROI in JSON. Output explained in **`SINGLE_ROI_GUIDE.md`**
-5. **`batch_single_roi.py`** - Processes all h5 within one folder - drawing ROI on the first arena or using the preexisting ROI in JSON. 
+5. **`batch_single_roi.py`** - Processes all h5 within one folder - drawing ROI on the first arena or using the preexisting ROI in JSON.
+6. **`batch_single_roi_new.py`** - Same usage as batch_single_roi, but with new utilities
 
 # 1. First, inspect your DeepLabCut h5 file to understand the data (inspect_dlc_h5.py)
 
@@ -88,6 +89,9 @@ FPS = ex. 25
 Script that quantifies animal behavior for a region of interest (ROI) from DeepLabCut tracking data. 
 ## New features: 
 Automatically processes multiple h5 files using the same ROI for all or existing one, generating individual 9-panel visualizations and CSV reports for each file, plus a summary table comparing all csv's.
+
+# 5. Single ROI all analysis - updated version (batch_single_roi_new.py)
+Automatically processes multiple h5 files using the same ROI for all or existing one, generating individual 9-panel visualizations and CSV reports for each file, plus a summary table comparing all csv's. More flexibility for data format.
 
 ## Requirements
 
