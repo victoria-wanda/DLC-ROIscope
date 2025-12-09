@@ -1,15 +1,7 @@
 #!/usr/bin/env python3
 """
 Batch ROI Analysis - Analyzes ALL h5 files in folder with same ROI
-
-TO CHANGE FPS: Edit line 555
-FPS = 25  # Your video frame rate
-
-The script will:
-1. Find all .h5 files in the folder
-2. Draw/select ROI for first file
-3. Automatically use same ROI for all other files
-4. Save results with full filenames
+Author: Wiktoria Zaniewska
 """
 
 from deeplabcut_roi_analysis import DeepLabCutROIAnalyzer
@@ -35,10 +27,9 @@ def get_tracking_bodypart(analyzer):
     for preferred in preferred_bodyparts:
         if preferred in bodyparts:
             return preferred
-    
-    # If none of the preferred bodyparts found, use first available
+
     if bodyparts:
-        print(f"Warning: Using first available bodypart: {bodyparts[0]}")
+        print(f"Using first available bodypart: {bodyparts[0]}")
         return bodyparts[0]
     
     raise ValueError("No bodyparts found in the data!")
@@ -279,29 +270,29 @@ def calculate_preference_metrics(analyzer, roi_name, fps=25):
     
     # 6. PREFERENCE INDICES
     
-    # A. Classic Preference Index (Schoenfeld et al., 1980)
+    # A. Classic Preference Index 
     # PI = (Time in ROI - Time outside) / Total time × 100
     preference_index_classic = ((time_in_roi_s - time_outside_s) / total_time_s) * 100
     
-    # B. Discrimination Index (Ennaceur & Delacour, 1988)
+    # B. Discrimination Index 
     # DI = (Time in ROI - Time outside) / (Time in ROI + Time outside)
     discrimination_index = (time_in_roi_s - time_outside_s) / (time_in_roi_s + time_outside_s)
     
-    # C. Exploration Ratio (Dix & Aggleton, 1999)
+    # C. Exploration Ratio 
     # ER = Time in ROI / (Time in ROI + Time outside)
     exploration_ratio = time_in_roi_s / (time_in_roi_s + time_outside_s)
     
     # D. Entry Preference Score
     # EPS = (Entries to ROI / Total locomotor activity) × 100
-    total_distance = np.sum(velocity) / fps  # total distance in pixels
+    total_distance = np.sum(velocity) / fps  
     if total_distance > 0:
-        entry_preference_score = (entries / total_distance) * 1000  # entries per 1000 pixels
+        entry_preference_score = (entries / total_distance) * 1000  
     else:
         entry_preference_score = 0
     
     # 7. STATISTICAL TESTS
     
-    # A. Binomial test - is time in ROI different from chance?
+    # A. Binomial test - is the time in ROI different from chance?
     # Get ROI area proportion
     roi_coords = analyzer.rois[roi_name]
     roi_width = roi_coords.bottomright[0] - roi_coords.topleft[0]
@@ -753,7 +744,7 @@ def analyze_single_roi():
             all_results.append(metrics)
             
         except Exception as e:
-            print(f"\n❌ Error processing {h5_file}: {e}")
+            print(f"Error processing {h5_file}: {e}")
             continue
     
     # Create summary table
