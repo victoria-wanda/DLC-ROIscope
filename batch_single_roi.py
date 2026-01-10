@@ -488,11 +488,11 @@ def create_visualizations(analyzer, metrics, in_roi, velocity, roi_name, fps=25)
     sig_marker = "***" if metrics['binomial_test_p'] < 0.001 else "**" if metrics['binomial_test_p'] < 0.01 else "*" if metrics['binomial_test_p'] < 0.05 else "ns"
     sig_text += f"Time in ROI vs chance:\np = {metrics['binomial_test_p']:.4f} {sig_marker}\n\n"
     
-    # Bout duration test
+    # Bout duration test definition
     sig_marker = "***" if metrics['bout_duration_t_test_p'] < 0.001 else "**" if metrics['bout_duration_t_test_p'] < 0.01 else "*" if metrics['bout_duration_t_test_p'] < 0.05 else "ns"
     sig_text += f"Bout duration vs expected:\np = {metrics['bout_duration_t_test_p']:.4f} {sig_marker}\n\n"
     
-    # Velocity test
+    # Velocity test definition
     sig_marker = "***" if metrics['velocity_mann_whitney_p'] < 0.001 else "**" if metrics['velocity_mann_whitney_p'] < 0.01 else "*" if metrics['velocity_mann_whitney_p'] < 0.05 else "ns"
     sig_text += f"Velocity in vs out:\np = {metrics['velocity_mann_whitney_p']:.4f} {sig_marker}\n\n"
     
@@ -520,7 +520,7 @@ def create_visualizations(analyzer, metrics, in_roi, velocity, roi_name, fps=25)
     ax8.text(0.1, 0.9, summary_text, transform=ax8.transAxes, fontsize=11,
             verticalalignment='top', fontfamily='monospace')
     
-    # 9. Trajectory with ROI highlighted
+    # 9. Trajectory with ROI that was highlighted I have used "Nose" 
     ax9 = plt.subplot(3, 3, 9)
     x = analyzer.df[analyzer.scorer]["Nose"]['x'].values
     y = analyzer.df[analyzer.scorer]["Nose"]['y'].values
@@ -532,7 +532,7 @@ def create_visualizations(analyzer, metrics, in_roi, velocity, roi_name, fps=25)
             alpha = 0.5 if in_roi[i] == 1 else 0.1
             ax9.plot([x[i-1], x[i]], [y[i-1], y[i]], color=color, alpha=alpha, linewidth=0.5)
     
-    # Draw ROI
+    # Draw ROI 
     roi_coords = analyzer.rois[roi_name]
     roi_vertices = [
         (roi_coords.topleft[0], roi_coords.topleft[1]),
@@ -724,7 +724,7 @@ def analyze_single_roi():
             all_results.append(metrics)
             
         except Exception as e:
-            print(f"\n❌ Error processing {h5_file}: {e}")
+            print(f"Error processing {h5_file}: {e}")
             continue
     
     # Create summary table
